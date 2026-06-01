@@ -80,6 +80,9 @@
                                 <span class="rounded bg-blue-100 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-blue-700">
                                     {{ $order['number'] ?? 'Belum Diterbitkan' }}
                                 </span>
+                                <span class="rounded bg-emerald-100 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-emerald-700" title="Tujuan SPPG">
+                                    {{ $order['sppg'] ?? 'Tujuan SPPG Tidak Diketahui' }}
+                                </span>
                                 <span class="text-sm font-black uppercase text-slate-700">{{ $supplierLabel }}</span>
                                 <span class="rounded bg-slate-200 px-2 py-0.5 text-[9px] font-black uppercase text-slate-600">
                                     {{ $order['created_by'] }}

@@ -65,6 +65,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="text-sm font-black uppercase text-slate-800">{{ $supplierLabel }}</span>
                                 <span class="rounded bg-blue-100 px-2 py-0.5 text-[9px] font-black text-blue-700">{{ $order['number'] ?? 'Belum Diterbitkan' }}</span>
+                                <span class="rounded bg-emerald-100 px-2 py-0.5 text-[9px] font-black text-emerald-700" title="Tujuan SPPG">{{ $order['sppg'] ?? 'Tujuan SPPG Tidak Diketahui' }}</span>
                             </div>
                             <span class="text-sm font-black text-slate-900">Rp {{ number_format($poTotal, 0, ',', '.') }}</span>
                         </div>

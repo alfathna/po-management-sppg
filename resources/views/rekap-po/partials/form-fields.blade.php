@@ -53,6 +53,9 @@
                     <span class="rounded bg-blue-100 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-blue-700">
                         {{ $order['number'] ?? 'Belum Diterbitkan' }}
                     </span>
+                    <span class="rounded bg-emerald-100 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-emerald-700" title="Tujuan SPPG">
+                        {{ $order['sppg'] ?? 'Tujuan SPPG Tidak Diketahui' }}
+                    </span>
                     <span class="text-[10px] font-black uppercase text-slate-500">{{ $supplierLabel }}</span>
                 </div>
                 <span class="text-[10px] font-bold text-slate-400">{{ count($order['items']) }} item</span>
