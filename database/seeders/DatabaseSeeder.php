@@ -79,6 +79,17 @@ class DatabaseSeeder extends Seeder
                 'bank_account_name' => 'Dwi Silvia Anggraini',
                 'bank_account_number' => '1420026949999',
             ],
+            [
+                'name' => 'PANEN SEGAR',
+                'address' => '-',
+                'phone' => null,
+                'logo_path' => 'logo-panensegar.png',
+                'stamp_path' => 'stamp-panensegar.png',
+                'theme_color' => '#9333ea',
+                'bank_name' => 'MANDIRI',
+                'bank_account_name' => 'ASHARI',
+                'bank_account_number' => '1420015743056',
+            ],
         ];
 
         foreach ($suppliers as $supplierData) {
