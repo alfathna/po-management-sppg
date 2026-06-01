@@ -414,19 +414,34 @@ trait ProcurementHelpers
             'NUTRIVA FOODS' => [
                 ['bank' => 'MANDIRI', 'account_name' => 'Dessy Istuning Tiyas', 'number' => '1420026949973'],
             ],
-            default => [
+            'DUNIA BUMBU MOJOKERTO' => [
                 ['bank' => 'MANDIRI', 'account_name' => 'Arif Rakhman Hadi', 'number' => '1420015180150'],
             ],
+            default => $this->supplierBankAccountsFromRecord($supplier),
         };
+    }
+
+    /**
+     * @return array<int, array{bank: string, account_name: string, number: string}>
+     */
+    private function supplierBankAccountsFromRecord(?string $supplier): array
+    {
+        $record = filled($supplier) ? Supplier::query()->where('name', $supplier)->first() : null;
+        $record ??= Supplier::query()->first();
+
+        return [
+            [
+                'bank' => $record?->bank_name ?? 'MANDIRI',
+                'account_name' => $record?->bank_account_name ?? 'Arif Rakhman Hadi',
+                'number' => $record?->bank_account_number ?? '1420015180150',
+            ],
+        ];
     }
 
     private function invoiceNumberFor(?string $supplier, string $poNumber): string
     {
-        $prefix = match ($supplier) {
-            'NUTRIVA FOODS' => 'NUTRIVA',
-            'VIALA PANGAN' => 'VIALA',
-            default => 'DUNIA',
-        };
+        $firstWord = strtok((string) $supplier, ' ');
+        $prefix = $firstWord !== false && $firstWord !== '' ? strtoupper($firstWord) : 'INVOICE';
 
         return 'INV/'.$prefix.'/'.substr(preg_replace('/\D+/', '', $poNumber), -6).random_int(10, 99);
     }
