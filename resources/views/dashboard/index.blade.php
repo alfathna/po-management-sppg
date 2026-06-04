@@ -62,7 +62,9 @@
             'bg-indigo-50 text-indigo-600',
             'bg-amber-50 text-amber-600',
         ];
-        $maxChart = max(1, collect($chartData)->max('value'));
+        $maxValue = max(1, collect($chartData)->max('value'));
+        $stepChart = max(1, ceil($maxValue / 5));
+        $maxChart = $stepChart * 5;
     @endphp
 
     <section class="mx-auto max-w-[1200px] space-y-7">
@@ -113,21 +115,31 @@
 
                 <div class="grid h-[310px] grid-cols-[36px_1fr] gap-4">
                     <div class="flex flex-col justify-between pb-8 pt-1 text-[10px] font-black text-slate-400">
-                        @for ($tick = $maxChart; $tick >= 0; $tick--)
+                        @for ($tick = $maxChart; $tick >= 0; $tick -= $stepChart)
                             <span>{{ $tick }}</span>
                         @endfor
                     </div>
                     <div class="relative">
                         <div class="absolute inset-x-0 top-0 bottom-8 flex flex-col justify-between">
-                            @for ($tick = 0; $tick <= $maxChart; $tick++)
+                            @for ($tick = 0; $tick <= $maxChart; $tick += $stepChart)
                                 <span class="border-t border-dashed border-slate-100"></span>
                             @endfor
                         </div>
                         <div class="relative z-10 grid h-full grid-cols-4 items-end gap-3 pb-8 sm:gap-8">
                             @foreach ($chartData as $item)
-                                <div class="flex h-full flex-col items-center justify-end gap-3">
-                                    <div class="{{ $item['color'] }} w-10 rounded-t-lg shadow-sm" style="height: {{ $item['value'] === 0 ? 2 : max(22, ($item['value'] / $maxChart) * 250) }}px"></div>
-                                    <span class="text-[10px] font-black text-slate-400">{{ $item['label'] }}</span>
+                                <div class="group flex h-full cursor-pointer flex-col items-center justify-end gap-3">
+                                    <div class="relative flex flex-col items-center">
+                                        <!-- Tooltip -->
+                                        <div class="absolute bottom-full mb-2 pointer-events-none z-20 flex flex-col items-center opacity-0 transition-all duration-300 group-hover:-translate-y-1 group-hover:opacity-100">
+                                            <span class="relative whitespace-nowrap rounded-md bg-slate-800 px-2.5 py-1 text-xs font-bold text-white shadow-lg">
+                                                {{ $item['value'] }} Dokumen
+                                            </span>
+                                            <div class="-mt-1 h-2 w-2 rotate-45 bg-slate-800"></div>
+                                        </div>
+                                        <!-- Bar -->
+                                        <div class="{{ $item['color'] }} w-10 rounded-t-lg shadow-sm transition-all duration-500 group-hover:brightness-110" style="height: {{ $item['value'] === 0 ? 2 : max(22, ($item['value'] / $maxChart) * 250) }}px"></div>
+                                    </div>
+                                    <span class="text-[10px] font-black text-slate-400 transition-colors group-hover:text-slate-700">{{ $item['label'] }}</span>
                                 </div>
                             @endforeach
                         </div>
